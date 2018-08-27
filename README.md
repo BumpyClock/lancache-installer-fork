@@ -1,5 +1,6 @@
 # Do not use - Under development lancache-installer
 
+# Forked from nexusofdoom with tweaks for my own personal network environment, please use with care.
 Installer for the [lancache](https://github.com/zeropingheroes/lancache) by [nexusofdoom](https://github.com/nexusofdoom) and [Zero Ping Heroes](https://github.com/zeropingheroes)
  
  ##### Install Debian 9.4 X64 with SSH and Endable sudo
