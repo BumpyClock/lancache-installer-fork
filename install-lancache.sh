@@ -14,8 +14,9 @@ lc_date=$( date +"%m-%d-%y %T" )
 lc_hn=$( hostname )
 lc_int_log=interface_used.log
 lc_list_int=$( ls /sys/class/net )
-lc_ip_googledns1=8.8.8.8
-lc_ip_googledns2=8.8.4.4
+# point DNS to pihole. You can either point it to your router or to a public DNS
+lc_ip_googledns1=192.168.1.2
+lc_ip_googledns2=192.168.1.2
 lc_ip_logfile=ip.log
 lc_ip_gw=$( /sbin/ip route | awk '/default/ { print $3 }' )
 apt-get install net-tools -y
@@ -55,65 +56,60 @@ chmod +x /etc/systemd/system/sniproxy.service
 systemctl enable sniproxy.service
 
 ## Divide the ip in variables
-lc_ip=$( ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
-lc_eth_int=$( ip route get 8.8.8.8 | awk '{print $5}' )
-lc_eth_netmask=$( ifconfig eth0 | grep inet | grep netmask | cut -f13 -d ' ' )
-lc_ip_p1=$(echo ${lc_ip} | tr "." " " | awk '{ print $1 }')
-lc_ip_p2=$(echo ${lc_ip} | tr "." " " | awk '{ print $2 }')
-lc_ip_p3=$(echo ${lc_ip} | tr "." " " | awk '{ print $3 }')
-lc_ip_p4=$(echo ${lc_ip} | tr "." " " | awk '{ print $4 }')
+## Commented out since I will assign IPs manually
+# lc_ip=$( ip route get 8.8.8.8 | awk 'NR==1 {print $NF}')
+# lc_eth_int=$( ip route get 8.8.8.8 | awk '{print $5}' )
+# lc_eth_netmask=$( ifconfig eth0 | grep inet | grep netmask | cut -f13 -d ' ' )
+# lc_ip_p1=$(echo ${lc_ip} | tr "." " " | awk '{ print $1 }')
+# lc_ip_p2=$(echo ${lc_ip} | tr "." " " | awk '{ print $2 }')
+# lc_ip_p3=$(echo ${lc_ip} | tr "." " " | awk '{ print $3 }')
+# lc_ip_p4=$(echo ${lc_ip} | tr "." " " | awk '{ print $4 }')
 
 ## Increment the last IP digit for every Game
-lc_incr_steam=$((lc_ip_p4+1))
-lc_ip_steam=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_steam
+lc_ip_steam=192.168.1.24
 
-lc_incr_riot=$((lc_ip_p4+2))
-lc_ip_riot=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_riot
+lc_ip_riot=192.168.1.25
+# 
+# 
 
-lc_incr_blizzard=$((lc_ip_p4+3))
-lc_ip_blizzard=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_blizzard
+lc_ip_blizzard=192.168.1.26
 
-lc_incr_hirez=$((lc_ip_p4+4))
-lc_ip_hirez=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_hirez
+lc_ip_hirez=192.168.1.27
 
-lc_incr_origin=$((lc_ip_p4+5))
-lc_ip_origin=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_origin
 
-lc_incr_sony=$((lc_ip_p4+6))
-lc_ip_sony=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_sony
+lc_ip_origin=192.168.1.28
 
-lc_incr_microsoft=$((lc_ip_p4+7))
-lc_ip_microsoft=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_microsoft
+lc_ip_sony=192.168.1.29
 
-lc_incr_enmasse=$((lc_ip_p4+8))
-lc_ip_enmasse=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_enmasse
+lc_ip_microsoft=192.168.1.30
 
-lc_incr_gog=$((lc_ip_p4+9))
-lc_ip_gog=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_gog
 
-lc_incr_arena=$((lc_ip_p4+10))
-lc_ip_arena=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_arena
+lc_ip_enmasse=192.168.1.31
 
-lc_incr_wargaming=$((lc_ip_p4+11))
-lc_ip_wargaming=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_wargaming
 
-lc_incr_uplay=$((lc_ip_p4+12))
-lc_ip_uplay=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_uplay
+lc_ip_gog=192.168.1.32
 
-lc_incr_apple=$((lc_ip_p4+13))
-lc_ip_apple=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_apple
 
-lc_incr_glyph=$((lc_ip_p4+14))
-lc_ip_glyph=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_glyph
+lc_ip_arena=192.168.1.33
 
-lc_incr_zenimax=$((lc_ip_p4+15))
-lc_ip_zenimax=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_zenimax
 
-lc_incr_digitalextremes=$((lc_ip_p4+16))
-lc_ip_digitalextremes=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_digitalextremes
+lc_ip_wargaming=192.168.1.34
 
-lc_incr_pearlabyss=$((lc_ip_p4+17))
-lc_ip_pearlabyss=$lc_ip_p1.$lc_ip_p2.$lc_ip_p3.$lc_incr_pearlabyss
+
+lc_ip_uplay=192.168.1.35
+
+
+lc_ip_apple=192.168.1.36
+
+
+lc_ip_glyph=192.168.1.37
+
+
+lc_ip_zenimax=192.168.1.38
+
+lc_ip_digitalextremes=192.168.1.39
+
+lc_ip_pearlabyss=192.168.1.40
 
 ## Put IP's in the log file
 echo [ lc_date ] Information !!! >>$lc_base_folder/logs/$lc_ip_logfile
